@@ -7,6 +7,12 @@ export interface Idea {
   text: string;
 }
 
+interface Raiting {
+  id: number;
+  value: number;
+  novelty: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -14,26 +20,38 @@ export class IdeaService {
   private static readonly URL = '/api/ideas';
 
   private userId: string;
-  private currentId = 1;
+  private currentIndex = 0;
+  private ideas: Idea[];
+  private ratings: Raiting[] = [];
+  public currentIdea$: Subject<Idea> = new Subject();
 
-  public currentIdea$ = new Subject();
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.getIdeas(0);
+  }
 
   setUser(userId: string) {
     this.userId = userId;
   }
 
-  getIdeas(page: number): Observable<Idea[]> {
+  getIdeas(page: number): void {
     const params = new HttpParams().append('page', page + '').set('size', '50');
-    return this.http.get<Idea[]>(IdeaService.URL, { params });
+    this.http.get<Idea[]>(IdeaService.URL, { params }).subscribe(ideas => {
+      this.ideas = ideas;
+      this.getNextIdea();
+    });
   }
 
-  getNextIdea(): Observable<Idea> {
-    return this.http.get<Idea>(`${IdeaService.URL}/${this.currentId++}`);
+  getNextIdea(): void {
+    this.currentIdea$.next(this.ideas[this.currentIndex]);
+    this.currentIndex++;
   }
 
-  submitRating(id: number, novelty: number, value: number): Observable<any> {
-    return this.http.patch(`${IdeaService.URL}/${id}`, { id, novelty, value, userId: this.userId });
+  addRating(id: number, novelty: number, value: number) {
+    this.ratings.push({ id, novelty, value });
+  }
+
+  submitRatings(): Observable<any> {
+    const body = { userId: this.userId, ratings: this.ratings };
+    return this.http.post(IdeaService.URL, body);
   }
 }
