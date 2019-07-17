@@ -1,6 +1,35 @@
-<label id="example-radio-group-label">Pick your favorite season</label>
-<mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="selectedNovelty">
-  <mat-radio-button class="example-radio-button" *ngFor="let noveltyValue of noveltyValues" [value]="noveltyValue">
-    {{ noveltyValue }}
-  </mat-radio-button>
-</mat-radio-group>
+<div *ngIf="currentIdea | async; else spinner; let idea" class="grid">
+  <app-idea [ideaText]="idea.text" class="idea"></app-idea>
+
+  <app-likert-scale
+    [title]="'Novelty'"
+    [attribute]="'novel'"
+    [text]="'Consider how novel, original or surprising the idea is'"
+    (selectValue)="currentNovelty = $event"
+    class="novelty-raiting"
+  ></app-likert-scale>
+
+  <mat-divider></mat-divider>
+
+  <app-likert-scale
+    [title]="'Value'"
+    [attribute]="'valuable'"
+    [text]="
+      'Consider how useful the product idea is and how practical the idea sounds assuming the ‘fabric display’ technology is real'
+    "
+    (selectValue)="currentValue = $event"
+    class="value-raiting"
+  ></app-likert-scale>
+
+  <button
+    class="submit-button"
+    mat-raised-button
+    color="primary"
+    (click)="submit(idea.id, currentNovelty, currentValue)"
+  >
+    Submit
+  </button>
+</div>
+<ng-template #spinner>
+  <mat-spinner></mat-spinner>
+</ng-template>

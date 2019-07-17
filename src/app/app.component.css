@@ -1,5 +1,37 @@
-.example-radio-group {
-  display: flex;
-  flex-direction: column;
-  margin: 15px 0;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.idea {
+  grid-column-start: 2;
+  grid-column-end: 5;
+  grid-row-start: 2;
+  grid-row-end: 2;
+  margin-bottom: 50px;
+  margin-top: 60px;
+  justify-self: center;
+}
+
+.novelty-raiting {
+  grid-column-start: 2;
+  grid-column-end: 5;
+  grid-row-start: 4;
+  grid-row-end: 4;
+}
+
+.value-raiting {
+  grid-column-start: 2;
+  grid-column-end: 5;
+  grid-row-start: 5;
+  grid-row-end: 5;
+}
+
+.submit-button {
+  margin-top: 40px;
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 6;
+  grid-row-end: 6;
+  justify-self: center;
 }

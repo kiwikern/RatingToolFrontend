@@ -1,0 +1,23 @@
+{
+  "ideas": [
+    {
+      "id": 1,
+      "text": "This is my idea. It's not very good.",
+      "novelty": 2,
+      "value": 7,
+      "user": "1234",
+      "userId": "1234"
+    },
+    {
+      "id": 2,
+      "text": "This is my second idea. It has lots of text: Lorem ipsum dolor sit amet, option indoctum qui no, per dolorum copiosae ei. Commodo oporteat ne pri, vitae epicuri no per, tantas graeci eum ei. Ei eum explicari imperdiet maiestatis, zril mucius et pri. Eam ea corrumpit repudiandae. Nemore euripidis ius id. Ea quo wisi insolens intellegebat, ne minim corpora referrentur eam.",
+      "novelty": 3,
+      "value": 3,
+      "userId": "1234"
+    },
+    {
+      "id": 3,
+      "text": "This is my third idea. It's not very good."
+    }
+  ]
+}
