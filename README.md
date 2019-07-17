@@ -1,4 +1,4 @@
-# RaitingToolFrontend
+# RatingToolFrontend
 
 ## Development server
 
