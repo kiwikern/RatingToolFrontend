@@ -2,11 +2,7 @@
   "ideas": [
     {
       "id": 1,
-      "text": "This is my idea. It's not very good.",
-      "novelty": 2,
-      "value": 7,
-      "user": "1234",
-      "userId": "1234"
+      "text": "This is my idea. It's not very good."
     },
     {
       "id": 2,

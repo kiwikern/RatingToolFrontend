@@ -1,7 +1,5 @@
 <mat-card>
-  <mat-card-title>
-    Idea (4 / 10)
-  </mat-card-title>
+  <mat-card-title> Idea ({{ ideaService.currentIndex }} / {{ ideaService.ideas.length }}) </mat-card-title>
   <mat-card-content>
     {{ ideaText }}
   </mat-card-content>

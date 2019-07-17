@@ -1,6 +1,6 @@
 <h3>{{ title }}</h3>
 <mat-hint>{{ text }}</mat-hint>
-<mat-radio-group class="example-radio-group" [(ngModel)]="selectedValue" required (change)="onChange()">
+<mat-radio-group class="example-radio-group" [(ngModel)]="selectedValue" required (change)="onChange(selectedValue)">
   <span class="scale-description start">not {{ attribute }}</span>
   <mat-radio-button class="example-radio-button" *ngFor="let noveltyValue of noveltyValues" [value]="noveltyValue">
     {{ noveltyValue }}

@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
+import { switchMap } from 'rxjs/operators';
 
 export interface Idea {
   id: number;
@@ -17,15 +20,16 @@ interface Raiting {
   providedIn: 'root',
 })
 export class IdeaService {
-  private static readonly URL = '/api/ideas';
+  private static readonly IDEAS_URL = '/api/ideas';
+  private static readonly RATINGS_URL = '/api/ratings';
 
   private userId: string;
-  private currentIndex = 0;
-  private ideas: Idea[];
+  public currentIndex = 0;
+  public ideas: Idea[];
   private ratings: Raiting[] = [];
   public currentIdea$: Subject<Idea> = new Subject();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private matDialog: MatDialog) {
     this.getIdeas(0);
   }
 
@@ -35,15 +39,23 @@ export class IdeaService {
 
   getIdeas(page: number): void {
     const params = new HttpParams().append('page', page + '').set('size', '50');
-    this.http.get<Idea[]>(IdeaService.URL, { params }).subscribe(ideas => {
+    this.http.get<Idea[]>(IdeaService.IDEAS_URL, { params }).subscribe(ideas => {
       this.ideas = ideas;
       this.getNextIdea();
     });
   }
 
   getNextIdea(): void {
-    this.currentIdea$.next(this.ideas[this.currentIndex]);
-    this.currentIndex++;
+    if (this.currentIndex < this.ideas.length) {
+      this.currentIdea$.next(this.ideas[this.currentIndex]);
+      this.currentIndex++;
+    } else {
+      this.matDialog
+        .open(SubmitDialogComponent)
+        .afterClosed()
+        .pipe(switchMap(() => this.submitRatings()))
+        .subscribe();
+    }
   }
 
   addRating(id: number, novelty: number, value: number) {
@@ -52,6 +64,6 @@ export class IdeaService {
 
   submitRatings(): Observable<any> {
     const body = { userId: this.userId, ratings: this.ratings };
-    return this.http.post(IdeaService.URL, body);
+    return this.http.post(IdeaService.RATINGS_URL, body);
   }
 }

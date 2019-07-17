@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
   MatCardModule,
+  MatDialogModule,
   MatDividerModule,
   MatFormFieldModule,
   MatProgressSpinnerModule,
@@ -16,9 +17,10 @@ import { IdeaComponent } from './idea/idea.component';
 import { LikertScaleComponent } from './likert-scale/likert-scale.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, IdeaComponent, LikertScaleComponent],
+  declarations: [AppComponent, IdeaComponent, LikertScaleComponent, SubmitDialogComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -30,9 +32,11 @@ import { RouterModule } from '@angular/router';
     MatDividerModule,
     HttpClientModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
     RouterModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent],
+  entryComponents: [SubmitDialogComponent],
 })
 export class AppModule {}
