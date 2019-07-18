@@ -34,7 +34,11 @@ import { RatingComponent } from './rating/rating.component';
     HttpClientModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    RouterModule.forRoot([]),
+    RouterModule.forRoot([
+      { path: '', redirectTo: 'read', pathMatch: 'full' },
+      { path: 'read', component: RatingComponent },
+      { path: 'rate', component: RatingComponent },
+    ]),
   ],
   providers: [],
   bootstrap: [AppComponent],
