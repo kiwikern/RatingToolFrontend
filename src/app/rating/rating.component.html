@@ -1,0 +1,37 @@
+<form
+  *ngIf="currentIdea | async; else spinner; let idea"
+  class="grid"
+  #ratingForm="ngForm"
+  (ngSubmit)="submit(idea.id); ratingForm.reset()"
+>
+  <app-idea [ideaText]="idea.text" class="idea"></app-idea>
+
+  <app-likert-scale
+    [title]="'Novelty'"
+    [attribute]="'novel'"
+    [text]="'Consider how novel, original or surprising the idea is'"
+    [(ngModel)]="currentNovelty"
+    name="novelty"
+    class="novelty-raiting"
+  ></app-likert-scale>
+
+  <mat-divider></mat-divider>
+
+  <app-likert-scale
+    [title]="'Value'"
+    [attribute]="'valuable'"
+    [text]="
+      'Consider how useful the product idea is and how practical the idea sounds assuming the ‘fabric display’ technology is real'
+    "
+    [(ngModel)]="currentValue"
+    name="value"
+    class="value-raiting"
+  ></app-likert-scale>
+
+  <button [disabled]="!ratingForm.form.valid" class="submit-button" mat-raised-button color="primary" type="submit">
+    Next
+  </button>
+</form>
+<ng-template #spinner>
+  <mat-spinner></mat-spinner>
+</ng-template>

@@ -1,18 +1,15 @@
 {
   "ideas": [
     {
-      "id": 1,
+      "id": "9bd464e5-538e-4b45-8de3-a8880f01a34e",
       "text": "This is my idea. It's not very good."
     },
     {
-      "id": 2,
-      "text": "This is my second idea. It has lots of text: Lorem ipsum dolor sit amet, option indoctum qui no, per dolorum copiosae ei. Commodo oporteat ne pri, vitae epicuri no per, tantas graeci eum ei. Ei eum explicari imperdiet maiestatis, zril mucius et pri. Eam ea corrumpit repudiandae. Nemore euripidis ius id. Ea quo wisi insolens intellegebat, ne minim corpora referrentur eam.",
-      "novelty": 3,
-      "value": 3,
-      "userId": "1234"
+      "id": "3fd0b1d7-4555-4054-bf8f-b911587f754a",
+      "text": "This is my second idea. It has lots of text: Lorem ipsum dolor sit amet, option indoctum qui no, per dolorum copiosae ei. Commodo oporteat ne pri, vitae epicuri no per, tantas graeci eum ei. Ei eum explicari imperdiet maiestatis, zril mucius et pri. Eam ea corrumpit repudiandae. Nemore euripidis ius id. Ea quo wisi insolens intellegebat, ne minim corpora referrentur eam."
     },
     {
-      "id": 3,
+      "id": "63f0e308-008b-492b-b2dd-0929fd585ed5",
       "text": "This is my third idea. It's not very good."
     }
   ]

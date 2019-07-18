@@ -18,9 +18,10 @@ import { LikertScaleComponent } from './likert-scale/likert-scale.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
+import { RatingComponent } from './rating/rating.component';
 
 @NgModule({
-  declarations: [AppComponent, IdeaComponent, LikertScaleComponent, SubmitDialogComponent],
+  declarations: [AppComponent, IdeaComponent, LikertScaleComponent, SubmitDialogComponent, RatingComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

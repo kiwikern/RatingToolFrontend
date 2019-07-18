@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
 import { switchMap } from 'rxjs/operators';
 
 export interface Idea {
-  id: number;
+  id: string;
   text: string;
 }
 
 interface Rating {
-  id: number;
+  id: string;
   value: number;
   novelty: number;
 }
@@ -30,23 +30,17 @@ export class IdeaService {
   public currentIdea$: Subject<Idea> = new Subject();
 
   constructor(private http: HttpClient, private matDialog: MatDialog) {
-    this.getIdeas(0);
+    this.getIdeas();
   }
 
   setUser(userId: string) {
     this.userId = userId;
-  }
-
-  getIdeas(page: number): void {
-    const params = new HttpParams().append('page', page + '').set('size', '50');
-    this.http.get<Idea[]>(IdeaService.IDEAS_URL, { params }).subscribe(ideas => {
-      this.ideas = ideas;
-      this.getNextIdea();
-    });
+    this.recoverStateFromLocalStorage();
   }
 
   getNextIdea(): void {
     if (this.currentIndex < this.ideas.length) {
+      this.saveToLocalStorage();
       this.currentIdea$.next(this.ideas[this.currentIndex]);
       this.currentIndex++;
     } else {
@@ -59,12 +53,43 @@ export class IdeaService {
     }
   }
 
-  addRating(id: number, novelty: number, value: number) {
+  addRating(id: string, novelty: number, value: number) {
     this.ratings.push({ id, novelty, value });
+    this.saveToLocalStorage();
   }
 
-  submitRatings(): Observable<any> {
+  private getIdeas(): void {
+    this.http.get<Idea[]>(IdeaService.IDEAS_URL).subscribe(ideas => {
+      this.ideas = ideas;
+      this.getNextIdea();
+    });
+  }
+
+  private submitRatings(): Observable<any> {
     const body = { userId: this.userId, ratings: this.ratings };
     return this.http.post(IdeaService.RATINGS_URL, body);
+  }
+
+  private recoverStateFromLocalStorage() {
+    try {
+      const state = JSON.parse(localStorage.getItem(this.getLocalStorageKey()));
+      this.ratings = state.ratings;
+      this.currentIndex = state.currentIndex;
+    } catch (e) {
+      console.log('New session. No saved state found.');
+    }
+  }
+
+  private saveToLocalStorage() {
+    try {
+      const state = { ratings: this.ratings, currentIndex: this.currentIndex };
+      localStorage.setItem(this.getLocalStorageKey(), JSON.stringify(state));
+    } catch (e) {
+      console.error('Saving state to localStorage failed', e);
+    }
+  }
+
+  private getLocalStorageKey() {
+    return `RatingTool:${this.userId}`;
   }
 }
