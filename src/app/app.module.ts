@@ -21,6 +21,7 @@ import { RouterModule } from '@angular/router';
 import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
 import { RatingComponent } from './rating/rating.component';
 import { ReadComponent } from './read/read.component';
+import { ChallengeComponent } from './challenge/challenge.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ReadComponent } from './read/read.component';
     SubmitDialogComponent,
     RatingComponent,
     ReadComponent,
+    ChallengeComponent,
   ],
   imports: [
     BrowserModule,
