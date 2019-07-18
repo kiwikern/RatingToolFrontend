@@ -28,7 +28,7 @@ export class IdeaService {
   public currentIndex = 0;
   public ideas: Idea[];
   private ratings: Rating[] = [];
-  private attentionAnswer: string;
+  private attentionQuestionAnswer: string;
   public currentIdea$: Subject<Idea> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient, private matDialog: MatDialog, private router: Router) {
@@ -63,8 +63,8 @@ export class IdeaService {
     this.saveToLocalStorage();
   }
 
-  setAttentionAnswer(attentionAnswer: string) {
-    this.attentionAnswer = attentionAnswer;
+  setAttentionAnswer(attentionQuestionAnswer: string) {
+    this.attentionQuestionAnswer = attentionQuestionAnswer;
     this.router.navigate(['rate'], { queryParamsHandling: 'merge' });
   }
 
@@ -76,7 +76,11 @@ export class IdeaService {
   }
 
   private submitRatings(): Observable<any> {
-    const body = { sessionId: this.sessionId, ratings: this.ratings, attentionAnswer: this.attentionAnswer };
+    const body = {
+      sessionId: this.sessionId,
+      ratings: this.ratings,
+      attentionQuestionAnswer: this.attentionQuestionAnswer,
+    };
     return this.http.post(IdeaService.RATINGS_URL, body);
   }
 

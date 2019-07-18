@@ -7,13 +7,13 @@ import { IdeaService } from '../idea.service';
   styleUrls: ['./attention-question.component.css'],
 })
 export class AttentionQuestionComponent implements OnInit {
-  attentionAnswer: string;
+  attentionQuestionAnswer: string;
 
   constructor(private ideaService: IdeaService) {}
 
   ngOnInit() {}
 
   submit() {
-    this.ideaService.setAttentionAnswer(this.attentionAnswer);
+    this.ideaService.setAttentionAnswer(this.attentionQuestionAnswer);
   }
 }
