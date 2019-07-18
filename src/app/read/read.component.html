@@ -1,7 +1,7 @@
 <h3>Please read all ideas carefully</h3>
 
 <mat-list>
-  <ng-container *ngFor="let idea of ideas; let isLast = last; let index = index">
+  <ng-container *ngFor="let idea of ideas$ | async; let isLast = last; let index = index">
     <h3 matSubheader>Idea {{ index + 1 }}</h3>
     <mat-list-item>
       {{ idea.text }}

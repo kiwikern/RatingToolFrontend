@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
@@ -25,19 +25,19 @@ export class IdeaService {
   private static readonly RATINGS_URL = '/api/ratings';
 
   private sessionId: string;
-  public currentIndex = 0;
-  public ideas: Idea[];
+  private ideas: Idea[];
   private ratings: Rating[] = [];
   private attentionQuestionAnswer: string;
   public currentIdea$: Subject<Idea> = new BehaviorSubject(null);
+  public currentIndex = 0;
+  public ideas$: Subject<Idea[]> = new BehaviorSubject([]);
 
-  constructor(private http: HttpClient, private matDialog: MatDialog, private router: Router) {
-    this.getIdeas();
-  }
+  constructor(private http: HttpClient, private matDialog: MatDialog, private router: Router) {}
 
   setSessionId(sessionId: string) {
     this.sessionId = sessionId;
     this.recoverStateFromLocalStorage();
+    this.getIdeas();
   }
 
   getNextIdea(): void {
@@ -69,13 +69,16 @@ export class IdeaService {
   }
 
   private getIdeas(): void {
-    this.http.get<Idea[]>(IdeaService.IDEAS_URL).subscribe(ideas => {
+    const params = new HttpParams().set('sessionId', this.sessionId);
+    this.http.get<Idea[]>(IdeaService.IDEAS_URL, { params }).subscribe(ideas => {
       this.ideas = ideas;
+      this.ideas$.next(ideas);
       this.getNextIdea();
     });
   }
 
   private submitRatings(): Observable<any> {
+    // TODO: on success redirect to /hit/end.html
     const body = {
       sessionId: this.sessionId,
       ratings: this.ratings,

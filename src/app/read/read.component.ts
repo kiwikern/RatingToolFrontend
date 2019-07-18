@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Idea, IdeaService } from '../idea.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-read',
@@ -7,11 +8,11 @@ import { Idea, IdeaService } from '../idea.service';
   styleUrls: ['./read.component.css'],
 })
 export class ReadComponent implements OnInit {
-  ideas: Idea[];
+  ideas$: Observable<Idea[]>;
 
   constructor(private ideaService: IdeaService) {}
 
   ngOnInit() {
-    this.ideas = this.ideaService.ideas;
+    this.ideas$ = this.ideaService.ideas$;
   }
 }
