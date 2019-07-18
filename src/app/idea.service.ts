@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
 import { switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 export interface Idea {
   id: string;
@@ -27,9 +28,9 @@ export class IdeaService {
   public currentIndex = 0;
   public ideas: Idea[];
   private ratings: Rating[] = [];
-  public currentIdea$: Subject<Idea> = new Subject();
+  public currentIdea$: Subject<Idea> = new BehaviorSubject(null);
 
-  constructor(private http: HttpClient, private matDialog: MatDialog) {
+  constructor(private http: HttpClient, private matDialog: MatDialog, private router: Router) {
     this.getIdeas();
   }
 
@@ -74,7 +75,11 @@ export class IdeaService {
     try {
       const state = JSON.parse(localStorage.getItem(this.getLocalStorageKey()));
       this.ratings = state.ratings;
+      this.ideas = state.ideas;
       this.currentIndex = state.currentIndex;
+      if (this.ratings && this.ratings.length > 0) {
+        this.router.navigate(['rate'], { queryParamsHandling: 'merge' });
+      }
     } catch (e) {
       console.log('New session. No saved state found.');
     }
@@ -82,7 +87,7 @@ export class IdeaService {
 
   private saveToLocalStorage() {
     try {
-      const state = { ratings: this.ratings, currentIndex: this.currentIndex };
+      const state = { ratings: this.ratings, currentIndex: this.currentIndex, ideas: this.ideas };
       localStorage.setItem(this.getLocalStorageKey(), JSON.stringify(state));
     } catch (e) {
       console.error('Saving state to localStorage failed', e);

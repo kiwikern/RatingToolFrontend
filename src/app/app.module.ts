@@ -9,6 +9,7 @@ import {
   MatDialogModule,
   MatDividerModule,
   MatFormFieldModule,
+  MatListModule,
   MatProgressSpinnerModule,
   MatRadioModule,
 } from '@angular/material';
@@ -19,9 +20,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
 import { RatingComponent } from './rating/rating.component';
+import { ReadComponent } from './read/read.component';
 
 @NgModule({
-  declarations: [AppComponent, IdeaComponent, LikertScaleComponent, SubmitDialogComponent, RatingComponent],
+  declarations: [
+    AppComponent,
+    IdeaComponent,
+    LikertScaleComponent,
+    SubmitDialogComponent,
+    RatingComponent,
+    ReadComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -36,9 +45,10 @@ import { RatingComponent } from './rating/rating.component';
     MatDialogModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'read', pathMatch: 'full' },
-      { path: 'read', component: RatingComponent },
+      { path: 'read', component: ReadComponent },
       { path: 'rate', component: RatingComponent },
     ]),
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

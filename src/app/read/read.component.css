@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-list {
+  max-width: 500px;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  padding-bottom: 20px;
+  margin: 10px;
+}
+
+mat-divider {
+  margin: 20px 0 10px 0;
+}
+
+h3 {
+  padding: 0 0 0 15px;
+}
+
+.mat-list-base .mat-list-item,
+.mat-list-base .mat-list-option {
+  height: unset;
+}
+
+button {
+  margin-top: 20px;
+  align-self: center;
+}

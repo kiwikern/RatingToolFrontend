@@ -1,0 +1,11 @@
+<mat-list>
+  <ng-container *ngFor="let idea of ideas; let isLast = last; let index = index">
+    <h3 matSubheader>Idea {{ index + 1 }}</h3>
+    <mat-list-item>
+      {{ idea.text }}
+    </mat-list-item>
+    <mat-divider *ngIf="!isLast"></mat-divider>
+  </ng-container>
+</mat-list>
+
+<button mat-raised-button color="primary" routerLink="/rate" queryParamsHandling="merge">I have read all ideas</button>
