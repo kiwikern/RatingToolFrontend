@@ -13,8 +13,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      if (params.userId) {
-        this.ideaService.setUser(params.userId);
+      if (params.sessionId) {
+        this.ideaService.setSessionId(params.sessionId);
       }
     });
   }
