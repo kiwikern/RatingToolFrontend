@@ -50,6 +50,7 @@ export class IdeaService {
       this.currentIdea$.next(this.ideas[this.currentIndex]);
       this.currentIndex++;
     } else {
+      this.currentIdea$.next(null);
       this.matDialog
         .open(SubmitDialogComponent)
         .afterClosed()
