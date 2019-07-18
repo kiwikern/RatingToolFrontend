@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
 import { switchMap } from 'rxjs/operators';
@@ -10,7 +10,7 @@ export interface Idea {
   text: string;
 }
 
-interface Raiting {
+interface Rating {
   id: number;
   value: number;
   novelty: number;
@@ -26,7 +26,7 @@ export class IdeaService {
   private userId: string;
   public currentIndex = 0;
   public ideas: Idea[];
-  private ratings: Raiting[] = [];
+  private ratings: Rating[] = [];
   public currentIdea$: Subject<Idea> = new Subject();
 
   constructor(private http: HttpClient, private matDialog: MatDialog) {
