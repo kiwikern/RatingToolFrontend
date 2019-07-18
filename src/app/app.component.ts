@@ -13,7 +13,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.ideaService.setUser(params.userId);
+      if (params.userId) {
+        this.ideaService.setUser(params.userId);
+      }
     });
   }
 }
