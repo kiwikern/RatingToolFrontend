@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-title>
+    Attention Question
+  </mat-card-title>
+  <mat-card-content>
+    <form ngForm (ngSubmit)="submit()">
+      <mat-form-field>
+        <mat-label>What is 3 + 6?</mat-label>
+        <input name="attention-answer" matInput placeholder="Result" [(ngModel)]="attentionAnswer" />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </form>
+  </mat-card-content>
+</mat-card>

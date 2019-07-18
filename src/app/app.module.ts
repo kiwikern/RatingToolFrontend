@@ -9,6 +9,7 @@ import {
   MatDialogModule,
   MatDividerModule,
   MatFormFieldModule,
+  MatInputModule,
   MatListModule,
   MatProgressSpinnerModule,
   MatRadioModule,
@@ -22,6 +23,7 @@ import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
 import { RatingComponent } from './rating/rating.component';
 import { ReadComponent } from './read/read.component';
 import { ChallengeComponent } from './challenge/challenge.component';
+import { AttentionQuestionComponent } from './attention-question/attention-question.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { ChallengeComponent } from './challenge/challenge.component';
     RatingComponent,
     ReadComponent,
     ChallengeComponent,
+    AttentionQuestionComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,8 +52,10 @@ import { ChallengeComponent } from './challenge/challenge.component';
       { path: '', redirectTo: 'read', pathMatch: 'full' },
       { path: 'read', component: ReadComponent },
       { path: 'rate', component: RatingComponent },
+      { path: 'attention', component: AttentionQuestionComponent },
     ]),
     MatListModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
