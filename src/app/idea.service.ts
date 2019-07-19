@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 export interface Idea {
@@ -53,7 +53,16 @@ export class IdeaService {
       this.matDialog
         .open(SubmitDialogComponent)
         .afterClosed()
-        .pipe(switchMap(() => this.submitRatings()))
+        .pipe(
+          switchMap(() =>
+            this.submitRatings().pipe(
+              map(() => {
+                this.clearLocalStorage();
+                this.redirectToEndscreen();
+              })
+            )
+          )
+        )
         .subscribe();
     }
   }
@@ -78,7 +87,6 @@ export class IdeaService {
   }
 
   private submitRatings(): Observable<any> {
-    // TODO: on success redirect to /hit/end.html
     const body = {
       sessionId: this.sessionId,
       ratings: this.ratings,
@@ -89,7 +97,11 @@ export class IdeaService {
 
   private recoverStateFromLocalStorage() {
     try {
-      const state = JSON.parse(localStorage.getItem(this.getLocalStorageKey()));
+      const stateString = localStorage.getItem(this.getLocalStorageKey());
+      if (!stateString) {
+        return;
+      }
+      const state = JSON.parse(stateString);
       this.ratings = state.ratings;
       this.ideas = state.ideas;
       this.currentIndex = state.currentIndex;
@@ -97,7 +109,7 @@ export class IdeaService {
         this.router.navigate(['rate'], { queryParamsHandling: 'merge' });
       }
     } catch (e) {
-      console.log('New session. No saved state found.');
+      console.error('Could not access app state from localStorage.', e);
     }
   }
 
@@ -112,5 +124,17 @@ export class IdeaService {
 
   private getLocalStorageKey() {
     return `RatingTool:${this.sessionId}`;
+  }
+
+  private clearLocalStorage() {
+    try {
+      localStorage.removeItem(this.getLocalStorageKey());
+    } catch (e) {
+      console.error('Could not clear localStorage', e);
+    }
+  }
+
+  private redirectToEndscreen() {
+    location.pathname = `${location.host}/hit/end.html`;
   }
 }
