@@ -3,13 +3,13 @@
     Attention Question
   </mat-card-title>
   <mat-card-content>
-    <form ngForm (ngSubmit)="submit()">
+    <form #form="ngForm" (ngSubmit)="submit()">
       <mat-form-field>
         <mat-label>What is 3 + 6?</mat-label>
-        <input name="attention-answer" matInput placeholder="Result" [(ngModel)]="attentionQuestionAnswer" />
+        <input name="attention-answer" matInput required placeholder="Result" [(ngModel)]="attentionQuestionAnswer" />
       </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form.form.valid">Submit</button>
     </form>
   </mat-card-content>
 </mat-card>
