@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "json-server": "json-server json-server/db.json --routes json-server/routes.json"
+    "json-server": "json-server json-server/db.json --routes json-server/routes.json --port 8080"
   },
   "private": true,
   "dependencies": {
