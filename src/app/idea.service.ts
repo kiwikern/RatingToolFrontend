@@ -105,6 +105,7 @@ export class IdeaService {
       this.ratings = state.ratings;
       this.ideas = state.ideas;
       this.currentIndex = state.currentIndex;
+      this.attentionQuestionAnswer = state.attentionQuestionAnswer;
       if (this.ratings && this.ratings.length > 0) {
         this.router.navigate(['rate'], { queryParamsHandling: 'merge' });
       }
@@ -115,7 +116,12 @@ export class IdeaService {
 
   private saveToLocalStorage() {
     try {
-      const state = { ratings: this.ratings, currentIndex: this.currentIndex, ideas: this.ideas };
+      const state = {
+        ratings: this.ratings,
+        currentIndex: this.currentIndex,
+        ideas: this.ideas,
+        attentionQuestionAnswer: this.attentionQuestionAnswer,
+      };
       localStorage.setItem(this.getLocalStorageKey(), JSON.stringify(state));
     } catch (e) {
       console.error('Saving state to localStorage failed', e);
@@ -135,6 +141,6 @@ export class IdeaService {
   }
 
   private redirectToEndscreen() {
-    location.pathname = `${location.host}/hit/end.html`;
+    location.pathname = `/hit/end.html`;
   }
 }
